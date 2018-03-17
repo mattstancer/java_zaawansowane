@@ -44,19 +44,26 @@ public Connection conn;
             System.out.println("Błąd połączenia z bazą danych");
         }
     }
-    public boolean CheckEmployee(){
+    public void AddEmployee(){
 
-            String sql = String.format("select count(*) as ilosc from employees where pesel=?");
+    }
+    public boolean CheckEmployee() {
+
+        String sql = String.format("select count(*) as ilosc from employees where pesel=?");
 
         try {
             PreparedStatement employeeToDb = this.conn.prepareStatement(sql);
             employeeToDb.setInt(1, person.getPesel());
             employeeToDb.executeUpdate();
             ResultSet rs = employeeToDb.executeQuery();
-            while (rs.next()) {
 
-            }
             this.conn.commit();
+            while (rs.next()) {
+                if (rs.getInt("ilosc") < 0) {
+                    return true;
+                }
+                return false;
+            }
         } catch (SQLException e) {
             e.printStackTrace();
         }
