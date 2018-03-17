@@ -4,10 +4,15 @@ import java.math.*;
 
 public class Employees {
 
-    public Employees(){
-
+    public Employees(String imie, String nazwisko, BigDecimal payment, Integer pesel, int phonennumber) {
+        this.imie = imie;
+        this.nazwisko = nazwisko;
+        this.payment = payment;
+        setPesel(pesel);
+        this.phonennumber = phonennumber;
     }
-    private enum EmployeeType{
+
+    public enum EmployeeType{
         Dyrektor, Handlowiec
     }
     private String imie;

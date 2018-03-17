@@ -10,7 +10,7 @@ private BigDecimal costsLimit;
     public BigDecimal getCostsLimit() {
         return costsLimit;
     }
-
+private EmployeeType employeeType=EmployeeType.Dyrektor;
     public void setCostsLimit(BigDecimal costsLimit) {
         this.costsLimit = costsLimit;
     }
@@ -25,6 +25,14 @@ private BigDecimal costsLimit;
 
     public BigDecimal getSupplement() {
         return supplement;
+    }
+
+    public Directors(String imie, String nazwisko, BigDecimal payment, Integer pesel, int phonennumber, BigDecimal supplement, int businessCard, BigDecimal costsLimit) {
+        super(imie, nazwisko, payment, pesel, phonennumber);
+        this.supplement = supplement;
+        this.businessCard = businessCard;
+        this.costsLimit = costsLimit;
+
     }
 
     public void setSupplement(BigDecimal supplement) {
