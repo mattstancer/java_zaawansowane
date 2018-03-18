@@ -53,7 +53,7 @@ public Connection conn;
 
         try {
             PreparedStatement employeeToDb = this.conn.prepareStatement(sql);
-            employeeToDb.setInt(1, person.getPesel());
+//            employeeToDb.setInt(1, person.getPesel());
             employeeToDb.executeUpdate();
             ResultSet rs = employeeToDb.executeQuery();
 
@@ -62,12 +62,14 @@ public Connection conn;
                 if (rs.getInt("ilosc") < 0) {
                     return true;
                 }
-                return false;
+
             }
         } catch (SQLException e) {
             e.printStackTrace();
-        }
+            return false;
 
+        }
+return false;
 
     }
 

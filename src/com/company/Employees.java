@@ -5,12 +5,12 @@ import java.util.*;
 
 public class Employees {
 
-    public Employees(String imie, String nazwisko, BigDecimal payment, Integer pesel, int phonennumber) {
+    public Employees(String imie, String nazwisko, BigDecimal payment, Integer pesel, int phonenumber) {
         this.imie = imie;
         this.nazwisko = nazwisko;
         this.payment = payment;
-        setPesel(pesel);
-        this.phonennumber = phonennumber;
+        checkPesel(pesel);
+        this.phonenumber = phonenumber;
     }
 
     public enum EmployeeType{
@@ -20,15 +20,15 @@ public class Employees {
     private String nazwisko;
     private BigDecimal payment;
     private Integer pesel;
-    private int phonennumber;
+    private int phonenumber;
 
-    public int getPhonennumber() {
-        return phonennumber;
+    public int getPhonenumber() {
+        return phonenumber;
     }
 
-    public void setPhonennumber(int phonennumber) {
-        this.phonennumber = phonennumber;
-    }
+//    public void setPhonennumber(int phonennumber) {
+//        this.phonennumber = phonennumber;
+//    }
 
     public String getImie() {
         return imie;
@@ -45,8 +45,8 @@ public class Employees {
         {
             setImie();
             setNazwisko();
-            setWynagrodzenie();
-            setStanowisko();
+            setPayment();
+//            setStanowisko();
             setTelefon();
         }
         catch(Exception e){
@@ -110,7 +110,7 @@ public class Employees {
         return true;
     }
 
-    Boolean setWynagrodzenie()
+    Boolean setPayment()
     {
         try
         {
@@ -119,24 +119,23 @@ public class Employees {
             String input = new String();
             input = line.nextLine();
             if(!input.isEmpty())
-                wynagrodzenie = new Integer(input);
+                payment = new BigDecimal(input);
             input = "";
         }catch(Exception e){
             return false;
         }
         return true;
     }
-
-    Boolean setStanowisko()
+    Boolean setPesel()
     {
         try
         {
-            System.out.println("Podaj Stanowisko");
+            System.out.println("Podaj Pesel");
             Scanner line = new Scanner(System.in);
             String input = new String();
             input = line.nextLine();
             if(!input.isEmpty())
-                stanowisko = input;
+                if(checkPesel(Integer.parseInt(input)));
             input = "";
         }catch(Exception e){
             return false;
@@ -153,7 +152,7 @@ public class Employees {
             String input = new String();
             input = line.nextLine();
             if(!input.isEmpty())
-                telefon = input;
+                phonenumber =Integer.parseInt(input);
             input = "";
         }catch(Exception e){
             return false;
@@ -169,12 +168,10 @@ public class Employees {
             System.out.println("imie           : " + imie);
         if(nazwisko != null)
             System.out.println("Nazwisko       : " + nazwisko);
-        if(wynagrodzenie != null)
-            System.out.println("wynagrodzenie  : " + wynagrodzenie + "z�");
-        if(stanowisko != null)
-            System.out.println("Stanowisko     : " + stanowisko);
-        if(telefon != null)
-            System.out.println("Telefon        : " + telefon);
+        if(payment != null)
+            System.out.println("wynagrodzenie  : " + payment + "zł");
+        if(phonenumber != 0)
+            System.out.println("Telefon        : " + phonenumber);
 
         System.out.println("----------------------------------");
     }
@@ -191,7 +188,7 @@ public class Employees {
         return pesel;
     }
 
-    public void setPesel(Integer pesel) {
+    public boolean checkPesel(Integer pesel) {
         if(pesel.toString().length()==11){
             char[] peselChars=pesel.toString().toCharArray();
             int[] checkArr={9, 7, 3, 1, 9, 7, 3, 1, 9, 7,0};
@@ -202,9 +199,13 @@ public class Employees {
             if(checkSum%10==Integer.parseInt(Character.toString(peselChars[11])))
             {
                 this.pesel = pesel;
+            return true;
             }
-            else System.out.print("źle wprowadzony pesel");
+            else {
+                System.out.print("źle wprowadzony pesel");
+            return false;
+            }
         }
-
+return false;
     }
 }
