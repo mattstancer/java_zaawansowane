@@ -1,15 +1,16 @@
 package com.company;
 
 import java.math.BigDecimal;
+import java.util.*;
 
 public class Traders extends Employees {
     private BigDecimal percentageValue;
 
-    public Traders(String imie, String nazwisko, BigDecimal payment, Integer pesel, int phonennumber, BigDecimal percentageValue, BigDecimal percentageLimitValue, EmployeeType employeeType) {
-        super(imie, nazwisko, payment, pesel, phonennumber);
+    public Traders(String imie, String nazwisko, BigDecimal payment, Integer pesel, int phonennumber, BigDecimal percentageValue, BigDecimal percentageLimitValue) {
+        super(imie, nazwisko, payment, pesel, phonennumber,"Handlowiec");
         this.percentageValue = percentageValue;
         this.percentageLimitValue = percentageLimitValue;
-        this.employeeType = employeeType;
+
     }
 
     public BigDecimal getPercentageValue() {
@@ -30,5 +31,58 @@ public class Traders extends Employees {
     }
 
     private BigDecimal percentageLimitValue;
-    private EmployeeType employeeType=EmployeeType.Handlowiec;
+    public boolean DodajPracownika()
+    {
+        setPesel();
+        setImie();
+        setNazwisko();
+        setPayment();
+        setTelefon();
+
+        try{
+
+            System.out.println("Podaj wielkosc prowizji");
+            Scanner line = new Scanner(System.in);
+            String input = line.nextLine();
+            if(!input.isEmpty())
+                percentageValue = new BigDecimal(input);
+                input = "";
+
+            System.out.println("Podaj limit prowizji");
+            Scanner line2 = new Scanner(System.in);
+            input = line2.nextLine();
+            if(!input.isEmpty())
+                percentageLimitValue = new BigDecimal(input);
+                input = "";
+        }
+        catch(Exception e){
+            System.out.println("B��d podczas wprowadzania danych " + e.getMessage());
+            return false;
+        }
+        return true;
+    }
+
+    public void Wyswietl() {
+
+        System.out.println("----------------------------------");
+        System.out.println("Identyfikator  : " + getPesel());
+        if(getImie() != null)
+            System.out.println("imie           : " + getImie());
+        if(getNazwisko() != null)
+            System.out.println("Nazwisko       : " + getNazwisko());
+        if(getPayment() != null)
+            System.out.println("wynagrodzenie  : " + getPayment() + "zł");
+        if(getType() != null)
+            System.out.println("Stanowisko     : " + getType());
+        if(getPhonenumber() != 0)
+            System.out.println("Telefon        : " + getPhonenumber());
+
+        if(getPercentageValue() != null)
+            System.out.println("Prowizja %  : " + getPercentageValue());
+
+        if(getPercentageLimitValue() != null)
+            System.out.println("Limit prowizji/miesiac  : " + getPercentageLimitValue());
+
+        System.out.println("----------------------------------");
+    }
 }

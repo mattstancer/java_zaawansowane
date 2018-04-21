@@ -5,11 +5,12 @@ import java.util.*;
 
 public class Employees {
 
-    public Employees(String imie, String nazwisko, BigDecimal payment, Integer pesel, int phonenumber) {
+    public Employees(String imie, String nazwisko, BigDecimal payment, Integer pesel, int phonenumber, String type) {
         this.imie = imie;
         this.nazwisko = nazwisko;
         this.payment = payment;
         checkPesel(pesel);
+        this.type=type;
         this.phonenumber = phonenumber;
     }
 
@@ -93,6 +94,10 @@ public class Employees {
         return true;
     }
 
+    public String getType() {
+        return type;
+    }
+
     Boolean setNazwisko()
     {
         try
@@ -108,8 +113,9 @@ public class Employees {
             return false;
         }
         return true;
-    }
 
+    }
+private String type;
     Boolean setPayment()
     {
         try
