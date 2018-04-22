@@ -64,7 +64,7 @@ public Connection conn;
             person.Wyswietl();
 
             try {
-                PreparedStatement prepareInsertDyrektor = this.conn.prepareStatement(
+                PreparedStatement prepareInsertDyrektor = conn.prepareStatement(
                         "INSERT INTO employees set (pesel, firstname, surname, payment, costsLimit, " +
                         "supplement, phoneNumber, `Type`, businessCard) VALUES (?, ?, ?, ?, ?, ?, ?,?,?)" );
                 prepareInsertDyrektor.setInt(1, person.getPesel());
@@ -77,7 +77,7 @@ public Connection conn;
                 prepareInsertDyrektor.setString(8, person.getType());
                 prepareInsertDyrektor.setInt(9, person.getBusinessCard());
                 prepareInsertDyrektor.executeQuery();
-                this.conn.commit();
+                conn.commit();
 
             } catch (SQLException e1) {
                 e1.printStackTrace();

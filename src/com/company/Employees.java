@@ -141,7 +141,8 @@ private String type;
             String input = new String();
             input = line.nextLine();
             if(!input.isEmpty())
-                if(checkPesel(Integer.parseInt(input)));
+
+                    pesel=Integer.parseInt(input);
             input = "";
         }catch(Exception e){
             return false;
@@ -186,9 +187,7 @@ private String type;
         return payment;
     }
 
-    public void setPayment(BigDecimal payment) {
-        this.payment = payment;
-    }
+
 
     public Integer getPesel() {
         return pesel;
@@ -204,7 +203,7 @@ private String type;
             }
             if(checkSum%10==Integer.parseInt(Character.toString(peselChars[11])))
             {
-                this.pesel = pesel;
+
             return true;
             }
             else {
