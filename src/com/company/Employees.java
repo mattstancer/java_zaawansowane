@@ -1,5 +1,6 @@
 package com.company;
 
+import java.io.ObjectOutputStream;
 import java.math.*;
 import java.util.*;
 
@@ -213,4 +214,11 @@ private String type;
         }
 return false;
     }
+}
+interface ObjectSerializer{
+void SerializeObject();
+
+}
+public class ObjectSerializerToByte implements ObjectSerializer{
+    public  void  Se
 }
