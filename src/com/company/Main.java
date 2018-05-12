@@ -24,7 +24,7 @@ public class Main {
                     employeeDb.Add();
                     break;
                 case '3':
-                    employeeDb.CheckEmployee();
+                    employeeDb.Delete();
                     break;
                 case '4':
                     //DownloadData(conn);

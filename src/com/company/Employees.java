@@ -9,7 +9,7 @@ public class Employees {
         this.imie = imie;
         this.nazwisko = nazwisko;
         this.payment = payment;
-        checkPesel(pesel);
+        this.pesel=(pesel);
         this.type=type;
         this.phonenumber = phonenumber;
     }

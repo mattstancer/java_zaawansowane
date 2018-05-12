@@ -1,5 +1,8 @@
 package com.company;
 
+import com.mysql.jdbc.ConnectionFeatureNotAvailableException;
+import com.mysql.jdbc.jdbc2.optional.JDBC4MysqlPooledConnection;
+//import org.
 import java.sql.*;
 import java.math.*;
 import java.util.*;
@@ -33,6 +36,16 @@ public Connection conn;
         }
 
     }
+//    private JDBC4MysqlPooledConnection dbcp;
+//    public Connection pooledConnection(){
+//
+//         try{
+//             dbcp.getConnection();
+//         }
+//catch (ConnectionFeatureNotAvailableException e){
+//
+//}
+  //  }
     public void Connect(){
         try {
             DriverManager.registerDriver(new com.mysql.jdbc.Driver());
@@ -64,9 +77,7 @@ public Connection conn;
             person.Wyswietl();
 
             try {
-                PreparedStatement prepareInsertDyrektor = conn.prepareStatement(
-                        "INSERT INTO employees set (pesel, firstname, surname, payment, costsLimit, " +
-                        "supplement, phoneNumber, `Type`, businessCard) VALUES (?, ?, ?, ?, ?, ?, ?,?,?)" );
+                PreparedStatement prepareInsertDyrektor = conn.prepareStatement("INSERT INTO employees  (pesel, firstname, surname, payment, costsLimit, supplement, phone, stanowisko, businessCard) VALUES (?, ?, ?, ?, ?, ?, ?,?,?)" );
                 prepareInsertDyrektor.setInt(1, person.getPesel());
                 prepareInsertDyrektor.setString(2, person.getImie());
                 prepareInsertDyrektor.setString(3, person.getNazwisko());
@@ -76,7 +87,7 @@ public Connection conn;
                 prepareInsertDyrektor.setInt(7, person.getPhonenumber());
                 prepareInsertDyrektor.setString(8, person.getType());
                 prepareInsertDyrektor.setInt(9, person.getBusinessCard());
-                prepareInsertDyrektor.executeQuery();
+                prepareInsertDyrektor.executeUpdate();
                 conn.commit();
 
             } catch (SQLException e1) {
@@ -91,7 +102,7 @@ public Connection conn;
             person.DodajPracownika();
 
             try {
-                PreparedStatement prepareInsertHandlowiec = this.conn.prepareStatement( "INSERT INTO employees (pesel, firstname, surname, payment,  percentageValue, percentageValueLimit, phoneNumber, `Type`, ) VALUES (?, ?,?, ?, ?, ?, ?, ?)" );
+                PreparedStatement prepareInsertHandlowiec = this.conn.prepareStatement( "INSERT INTO employees (pesel, firstname, surname, payment,  percentageValue, percentageLimitValue, phone, stanowisko ) VALUES (?, ?,?, ?, ?, ?, ?, ?)" );
                 prepareInsertHandlowiec.setInt(1, person.getPesel());
                 prepareInsertHandlowiec.setString(2, person.getImie());
                 prepareInsertHandlowiec.setString(3, person.getNazwisko());
@@ -100,7 +111,7 @@ public Connection conn;
                 prepareInsertHandlowiec.setInt(7, person.getPhonenumber());
                 prepareInsertHandlowiec.setBigDecimal(6, person.getPercentageValue());
                 prepareInsertHandlowiec.setBigDecimal(5, person.getPercentageLimitValue());
-                prepareInsertHandlowiec.executeQuery();
+                prepareInsertHandlowiec.executeUpdate();
                 this.conn.commit();
 
 
@@ -131,10 +142,10 @@ public Connection conn;
                 String imie = rs.getString("firstname");
                 String nazwisko = rs.getString("surname");
                 BigDecimal wynagrodzenie = rs.getBigDecimal("payment");
-                String stanowisko = rs.getString("Type");
-                Integer telefon = rs.getInt("phoneNumber");
-                BigDecimal prowizja = rs.getBigDecimal("percentage");
-                BigDecimal limit_prowizji = rs.getBigDecimal("percentageLimit");
+                String stanowisko = rs.getString("stanowisko");
+                Integer telefon = rs.getInt("phone");
+                BigDecimal prowizja = rs.getBigDecimal("percentageValue");
+                BigDecimal limit_prowizji = rs.getBigDecimal("percentageLimitValue");
                 BigDecimal dodatek_sluzbowy = rs.getBigDecimal("supplement");
                 Integer karta_sluzbowa = rs.getInt("businessCard");
                 BigDecimal limit_kosztow = rs.getBigDecimal("costsLimit");
@@ -177,7 +188,7 @@ public Connection conn;
             if(op.equals("D")) {
                 String sql;
                 Integer pesel =lista_pracownikow.get(index).getPesel();
-                sql = "DELETE FROM employees WHERE id =?";
+                sql = "DELETE FROM employees WHERE pesel =?";
                 lista_pracownikow.remove(index);
                 //System.out.println(sql);
                 try {
@@ -185,10 +196,11 @@ public Connection conn;
                     prpstm.setInt(1,pesel);
                     prpstm.executeUpdate();
                     this.conn.commit();
+
                 } catch (SQLException e) {
                     e.printStackTrace();
                 }
-                return;
+
             }
             if(op.equals("Q") || op.equals("q")) return;
         }
@@ -209,14 +221,14 @@ public Connection conn;
 
             while(rs.next()){
 
-                Integer id = rs.getInt("pesel");
+                Integer pesel = rs.getInt("pesel");
                 String imie = rs.getString("firstname");
                 String nazwisko = rs.getString("surname");
                 BigDecimal wynagrodzenie = rs.getBigDecimal("payment");
-                String stanowisko = rs.getString("Type");
-                Integer telefon = rs.getInt("phoneNumber");
+                String stanowisko = rs.getString("stanowisko");
+                Integer telefon = rs.getInt("phone");
                 BigDecimal prowizja = rs.getBigDecimal("percentageValue");
-                BigDecimal limit_prowizji = rs.getBigDecimal("percentageValueLimit");
+                BigDecimal limit_prowizji = rs.getBigDecimal("percentageLimitValue");
                 BigDecimal dodatek_sluzbowy = rs.getBigDecimal("supplement");
                 Integer karta_sluzbowa = rs.getInt("businessCard");
                 BigDecimal limit_kosztow = rs.getBigDecimal("costsLimit");
@@ -224,7 +236,7 @@ public Connection conn;
 
 
                 if(stanowisko.equals("Dyrektor")) {
-                    Directors dyrektor = new Directors(imie, nazwisko, wynagrodzenie, id, telefon, dodatek_sluzbowy,karta_sluzbowa,limit_kosztow);
+                    Directors dyrektor = new Directors(imie, nazwisko, wynagrodzenie, pesel, telefon, dodatek_sluzbowy,karta_sluzbowa,limit_kosztow);
 
 
 
@@ -232,7 +244,7 @@ public Connection conn;
 
                     lista_pracownikow.add(dyrektor);
                 }else {
-                    Traders handlowiec = new Traders(imie, nazwisko, wynagrodzenie, id, telefon, prowizja,limit_prowizji);
+                    Traders handlowiec = new Traders(imie, nazwisko, wynagrodzenie, pesel, telefon, prowizja,limit_prowizji);
                     lista_pracownikow.add(handlowiec);
                 }
             }

@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="apidocs">
+    <CLASSES />
+    <JAVADOC>
+      <root url="jar://$PROJECT_DIR$/commons-dbcp2-2.2.0-bin.zip!/commons-dbcp2-2.2.0/apidocs" />
+    </JAVADOC>
+    <SOURCES />
+  </library>
+</component>
