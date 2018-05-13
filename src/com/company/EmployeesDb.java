@@ -206,6 +206,64 @@ public Connection conn;
         }
     }
 
+    public ArrayList<Employees> employersList(){
+
+        Scanner line = new Scanner(System.in);
+        ArrayList<Employees> lista_pracownikow = null;
+        Statement stmt = null;
+        try{
+            lista_pracownikow = new ArrayList();
+
+            stmt = this.conn.createStatement();
+            String sql = "SELECT * from employees";
+
+            ResultSet rs = stmt.executeQuery(sql);
+
+            while(rs.next()){
+
+                Integer id = rs.getInt("pesel");
+                String imie = rs.getString("firstname");
+                String nazwisko = rs.getString("surname");
+                BigDecimal wynagrodzenie = rs.getBigDecimal("payment");
+                String stanowisko = rs.getString("Type");
+                Integer telefon = rs.getInt("phoneNumber");
+                BigDecimal prowizja = rs.getBigDecimal("percentageValue");
+                BigDecimal limit_prowizji = rs.getBigDecimal("percentageValueLimit");
+                BigDecimal dodatek_sluzbowy = rs.getBigDecimal("supplement");
+                Integer karta_sluzbowa = rs.getInt("businessCard");
+                BigDecimal limit_kosztow = rs.getBigDecimal("costsLimit");
+                System.out.println(stanowisko);
+
+
+                if(stanowisko.equals("Dyrektor")) {
+                    Directors dyrektor = new Directors(imie, nazwisko, wynagrodzenie, id, telefon, dodatek_sluzbowy,karta_sluzbowa,limit_kosztow);
+
+
+
+                    System.out.println(dyrektor.toString());
+
+                    lista_pracownikow.add(dyrektor);
+                }else {
+                    Traders handlowiec = new Traders(imie, nazwisko, wynagrodzenie, id, telefon, prowizja,limit_prowizji);
+                    lista_pracownikow.add(handlowiec);
+                }
+            }
+            rs.close();
+            stmt.close();
+        }catch(SQLException se){
+            se.printStackTrace();
+        }catch(Exception e){
+            e.printStackTrace();
+        }finally{
+            try{
+                if(stmt!=null)
+                    stmt.close();
+            }catch(SQLException se2){
+            }
+        }
+    return lista_pracownikow;
+    }
+
     public  void showList(){
 
         Scanner line = new Scanner(System.in);
