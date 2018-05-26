@@ -1,16 +1,28 @@
 package com.company;
+import java.rmi.RemoteException;
+import java.rmi.registry.LocateRegistry;
+import java.rmi.registry.Registry;
 import java.util.*;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-
+import com.company.RMIInterface;
+import com.company.RmiOperation;
 public class Main {
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws RemoteException {
 	// write your code here
         EmployeesDb employeeDb = new EmployeesDb("","","");
         employeeDb.Connect();
         char wybor = 0;
-        new Thread(new NetworkServer()).start();
+        Registry registry;
+        RMIInterface inter = new RmiOperation();
+        try {
+            registry = LocateRegistry.createRegistry(9009);
+            registry.rebind("//localhost/auth", inter);
+        } catch (Exception e) {
+            registry = LocateRegistry.getRegistry("//localhost/auth", 9009);
+        }
+        new Thread(new NetworkServer(inter)).start();
 
 
         ExecutorService threading = Executors.newFixedThreadPool(10);
@@ -34,13 +46,11 @@ public class Main {
                 case '3':
                     employeeDb.Delete();
                     break;
-                case '5':
-                 try{
-                  NetworkPage.downloadData();
+                case '4':
 
-                 }catch(Exception e){
+                  new NetworkPage().downloadData();
 
-                 }
+
                     break;
                 case 'q':
                     System.out.println("Wyjście");

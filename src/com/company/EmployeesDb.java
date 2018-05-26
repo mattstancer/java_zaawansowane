@@ -206,7 +206,7 @@ public Connection conn;
         }
     }
 
-    public ArrayList<Employees> employersList(){
+    public  ArrayList<Employees> employersList(){
 
         Scanner line = new Scanner(System.in);
         ArrayList<Employees> lista_pracownikow = null;
@@ -214,10 +214,14 @@ public Connection conn;
         try{
             lista_pracownikow = new ArrayList();
 
-            stmt = this.conn.createStatement();
+            stmt = conn.createStatement();
             String sql = "SELECT * from employees";
 
             ResultSet rs = stmt.executeQuery(sql);
+            try{conn.commit();}
+            catch(SQLException e){
+                conn.rollback();
+            }
 
             while(rs.next()){
 

@@ -5,11 +5,11 @@ import java.net.Socket;
 public class NetworkServer implements Runnable {
     private int port;
     private ServerSocket server;
-
-            public NetworkServer() {
+    private RMIInterface inter;
+            public NetworkServer(RMIInterface inter) {
 
                         this.port = 9000;
-
+                        this.inter=inter;
             }
 
 
@@ -17,7 +17,7 @@ public class NetworkServer implements Runnable {
             @Override
 
     public void run() {
-
+                System.out.println("RMI Server ready");
                 try {
 
                        server = new ServerSocket(port);
@@ -28,7 +28,7 @@ public class NetworkServer implements Runnable {
 
                                 //Running new session for connection
 
-                                        Thread t = new Thread(new ConnectionHandler(clientSocket));
+                                        Thread t = new Thread(new ConnectionHandler(clientSocket,inter));
 
                                 t.start();
 

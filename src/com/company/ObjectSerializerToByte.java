@@ -16,13 +16,13 @@ public class ObjectSerializerToByte implements ObjectSerializer {
     private Socket socket;
     @Override
     @SuppressWarnings("unchecked")
-    public Employeess SerializeObject(){
+    public Employeess SerializeObject(String token){
         Employeess employeess = new Employeess();
 
 try {
     ByteArrayOutputStream baos = new ByteArrayOutputStream();
     ObjectOutputStream out = new ObjectOutputStream(baos);
-    //out.writeObject(new ClientRequest());
+    out.writeObject(new ClientRequest(token, "GetWorkers"));
     byte[] bytes = baos.toByteArray();
     socket.getOutputStream().write(bytes);
     socket.getOutputStream().flush();
