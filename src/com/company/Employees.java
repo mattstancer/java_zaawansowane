@@ -215,10 +215,5 @@ private String type;
 return false;
     }
 }
-interface ObjectSerializer{
-void SerializeObject();
 
-}
-public class ObjectSerializerToByte implements ObjectSerializer{
-    public  void  Se
-}
+

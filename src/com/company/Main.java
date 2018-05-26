@@ -1,5 +1,8 @@
 package com.company;
 import java.util.*;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+
 public class Main {
 
     public static void main(String[] args) {
@@ -7,6 +10,11 @@ public class Main {
         EmployeesDb employeeDb = new EmployeesDb("","","");
         employeeDb.Connect();
         char wybor = 0;
+        new Thread(new NetworkServer()).start();
+
+
+        ExecutorService threading = Executors.newFixedThreadPool(10);
+
         Scanner input = new Scanner(System.in);
 
         while(wybor != 'q') {
@@ -26,8 +34,13 @@ public class Main {
                 case '3':
                     employeeDb.Delete();
                     break;
-                case '4':
-                    //DownloadData(conn);
+                case '5':
+                 try{
+                  NetworkPage.downloadData();
+
+                 }catch(Exception e){
+
+                 }
                     break;
                 case 'q':
                     System.out.println("Wyjście");

@@ -1,18 +1,14 @@
 package com.company;
+import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
 public class NetworkServer implements Runnable {
     private int port;
+    private ServerSocket server;
 
+            public NetworkServer() {
 
-
-
-
-            public NetworkServer(ActorSystem system) {
-
-                this.system = system;
-
-                this.port = system.settings().config().getInt("network.server.port");
+                        this.port = 9000;
 
             }
 
@@ -24,17 +20,15 @@ public class NetworkServer implements Runnable {
 
                 try {
 
-                        ServerSocket serverSocket = new ServerSocket(port);
-
-                        system.log().info("TCP server started");
-
+                       server = new ServerSocket(port);
+                        
                         while (true) {
 
-                                Socket clientSocket = serverSocket.accept();
+                                Socket clientSocket = server.accept();
 
                                 //Running new session for connection
 
-                                        Thread t = new Thread(new ConnectionHandler(clientSocket,system));
+                                        Thread t = new Thread(new ConnectionHandler(clientSocket));
 
                                 t.start();
 
@@ -42,9 +36,8 @@ public class NetworkServer implements Runnable {
 
                     } catch (IOException e) {
 
-                        system.log().error(e, "Error");
 
-                    }
+                }
 
             }
 
