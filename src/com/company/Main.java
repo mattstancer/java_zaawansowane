@@ -22,7 +22,7 @@ public class Main {
         } catch (Exception e) {
             registry = LocateRegistry.getRegistry("//localhost/auth", 9009);
         }
-        new Thread(new NetworkServer(inter)).start();
+        new Thread(new NetworkServer(inter,employeeDb)).start();
 
 
         ExecutorService threading = Executors.newFixedThreadPool(10);

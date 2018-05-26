@@ -225,18 +225,18 @@ public Connection conn;
 
             while(rs.next()){
 
-                Integer id = rs.getInt("pesel");
+                Integer id = Integer.valueOf(rs.getInt("pesel"));
                 String imie = rs.getString("firstname");
                 String nazwisko = rs.getString("surname");
                 BigDecimal wynagrodzenie = rs.getBigDecimal("payment");
-                String stanowisko = rs.getString("Type");
-                Integer telefon = rs.getInt("phoneNumber");
+                String stanowisko = rs.getString("stanowisko");
+                Integer telefon = rs.getInt("phone");
                 BigDecimal prowizja = rs.getBigDecimal("percentageValue");
-                BigDecimal limit_prowizji = rs.getBigDecimal("percentageValueLimit");
+                BigDecimal limit_prowizji = rs.getBigDecimal("percentageLimitValue");
                 BigDecimal dodatek_sluzbowy = rs.getBigDecimal("supplement");
                 Integer karta_sluzbowa = rs.getInt("businessCard");
                 BigDecimal limit_kosztow = rs.getBigDecimal("costsLimit");
-                System.out.println(stanowisko);
+
 
 
                 if(stanowisko.equals("Dyrektor")) {
@@ -250,6 +250,7 @@ public Connection conn;
                 }else {
                     Traders handlowiec = new Traders(imie, nazwisko, wynagrodzenie, id, telefon, prowizja,limit_prowizji);
                     lista_pracownikow.add(handlowiec);
+                    System.out.println(handlowiec.toString());
                 }
             }
             rs.close();

@@ -10,11 +10,12 @@ public class ConnectionHandler implements Runnable {
     private Socket clientSocket = null;
     private ObjectOutputStream out;
     private ObjectInputStream in;
-
+private EmployeesDb eDb= null;
     private RMIInterface interf;
-    public ConnectionHandler(Socket clientSocket, RMIInterface interf) {
+    public ConnectionHandler(Socket clientSocket, RMIInterface interf, EmployeesDb eDb) {
         this.clientSocket = clientSocket;
         this.interf = interf;
+        this.eDb=eDb;
     }
 
     @Override
@@ -28,7 +29,7 @@ public class ConnectionHandler implements Runnable {
                 System.out.println("Token valid");
                 switch (clientRequest.getRequest()) {
                     case "GetWorkers":
-                        Object result = new EmployeesDb("","","").employersList();
+                        Object result = eDb.employersList();
                         try {
                             ((ObjectSerializerToByte) client).sendWorkersAndClose((ArrayList<Employees>) result);
                             interf.deleteToken(clientRequest.getToken());

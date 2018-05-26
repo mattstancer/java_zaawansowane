@@ -116,6 +116,7 @@ public class Employees {
         return true;
 
     }
+
 private String type;
     Boolean setPayment()
     {
