@@ -1,7 +1,9 @@
 package com.company;
 
+import javax.xml.bind.annotation.*;
 import java.util.ArrayList;
-
+@XmlRootElement(name = "employees")
+@XmlAccessorType(XmlAccessType.FIELD)
 public class Employeess {
     public ArrayList<Employees> getEmployees() {
         return employees;

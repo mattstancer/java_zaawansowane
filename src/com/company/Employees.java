@@ -1,9 +1,11 @@
 package com.company;
 
+import javax.xml.bind.*;
+import javax.xml.bind.annotation.*;
 import java.io.ObjectOutputStream;
 import java.math.*;
 import java.util.*;
-
+@XmlAccessorType(XmlAccessType.FIELD)
 public class Employees {
 
     public Employees(String imie, String nazwisko, BigDecimal payment, Integer pesel, int phonenumber, String type) {
@@ -15,13 +17,14 @@ public class Employees {
         this.phonenumber = phonenumber;
     }
 
-    public enum EmployeeType{
-        Dyrektor, Handlowiec
-    }
+
     private String imie;
     private String nazwisko;
+    @XmlElement(name = "payment")
     private BigDecimal payment;
+    @XmlElement(name = "pesel")
     private Integer pesel;
+    @XmlElement(name = "phonenumber")
     private int phonenumber;
 
     public int getPhonenumber() {
