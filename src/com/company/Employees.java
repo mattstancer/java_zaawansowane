@@ -17,8 +17,9 @@ public class Employees {
         this.phonenumber = phonenumber;
     }
 
-
+    @XmlElement(name = "imie")
     private String imie;
+    @XmlElement(name = "nazwisko")
     private String nazwisko;
     @XmlElement(name = "payment")
     private BigDecimal payment;
@@ -119,7 +120,7 @@ public class Employees {
         return true;
 
     }
-
+    @XmlElement(name = "stanowisko")
 private String type;
     Boolean setPayment()
     {

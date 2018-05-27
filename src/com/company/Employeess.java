@@ -8,7 +8,10 @@ public class Employeess {
     public ArrayList<Employees> getEmployees() {
         return employees;
     }
-
+    @XmlElements({
+            @XmlElement(name = "Handlowiec", type = Traders.class),
+            @XmlElement(name = "Dyrektor", type = Directors.class)
+    })
     public void setEmployees(ArrayList<Employees> employees) {
         this.employees = employees;
     }

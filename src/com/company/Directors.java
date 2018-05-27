@@ -1,16 +1,25 @@
 package com.company;
 
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
 import java.math.*;
 import java.util.*;
+@XmlRootElement
+@XmlAccessorType(XmlAccessType.FIELD)
 public class Directors extends Employees {
+    @XmlElement(name = "suplement")
 private BigDecimal supplement;
+    @XmlElement(name = "kartaSluzbowa")
 private int businessCard;
+    @XmlElement(name = "limitKosztow")
 private BigDecimal costsLimit;
 
     public BigDecimal getCostsLimit() {
         return costsLimit;
     }
-private EmployeeType employeeType=EmployeeType.Dyrektor;
+
     public void setCostsLimit(BigDecimal costsLimit) {
         this.costsLimit = costsLimit;
     }

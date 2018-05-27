@@ -1,9 +1,15 @@
 package com.company;
 
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
 import java.math.BigDecimal;
 import java.util.*;
-
+@XmlRootElement
+@XmlAccessorType(XmlAccessType.FIELD)
 public class Traders extends Employees {
+    @XmlElement(name = "prowizja")
     private BigDecimal percentageValue;
 
     public Traders(String imie, String nazwisko, BigDecimal payment, Integer pesel, int phonennumber, BigDecimal percentageValue, BigDecimal percentageLimitValue) {
